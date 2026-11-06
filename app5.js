@@ -4,6 +4,26 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use("/public", express.static(__dirname + "/public"));
 
+let station=[
+  {id:1,code:"JE01",name:"東京駅"},
+  {id:2,code:"JE07",name:"舞浜駅"},
+  {id:3,code:"JE12",name:"新習志野駅"},
+  {id:4,code:"JE13",name:"幕張豊砂駅"},
+  {id:5,code:"JE14",name:"海浜幕張駅"},
+  {id:6,code:"JE05",name:"新浦安駅"},
+];
+
+app.get("/keiyo",(req,res)=>{
+
+  res.render('db2',{data:station});
+});
+
+app.get("/keiyo_add",(req.res)=>{
+
+})
+
+
+
 app.get("/hello1", (req, res) => {
   const message1 = "Hello world";
   const message2 = "Bon jour";
@@ -50,6 +70,9 @@ app.get("/janken", (req, res) => {
   // ここに勝敗の判定を入れる
   // 以下の数行は人間の勝ちの場合の処理なので，
   // 判定に沿ってあいこと負けの処理を追加する
+
+
+
   judgement = '勝ち';
   win += 1;
   total += 1;
@@ -61,6 +84,43 @@ app.get("/janken", (req, res) => {
     total: total
   }
   res.render( 'janken', display );
+});
+
+app.get("/janken2",(req,res)=>{
+  let hand=req.query.hand;
+  let win =Number(req.query.win);
+  let total = Number(req.query.total);
+  console.log({hand,win,total});
+  const num=Math.floor(Math.random()*3+1);
+  let cpu='';
+  let judgement='';
+  if(num==1)cpu='グー';
+  if(num==2)cpu='チョキ';
+  else cpu='パー';
+
+  
+
+
+  
+ judgement = '勝ち';
+  win += 1;
+  total += 1;
+  const display = {
+    your: hand,
+    cpu: cpu,
+    judgement: judgement,
+    win: win,
+    total: total
+  }
+  res.render( 'janken', display );
+})
+
+app.get("/button", (req, res) => {
+  const value = req.query.text;
+
+
+
+
 });
 
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
