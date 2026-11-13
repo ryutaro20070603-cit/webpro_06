@@ -48,7 +48,8 @@ app.get("/keiyo2/:number",(req,res)=>{
 
   const number=req.params.number;
   const detail=station2[number];
-  res.render('keiyo_detail',{data:detail});
+
+  res.render('keiyo2_detail',{data:detail});
 });
 
 
